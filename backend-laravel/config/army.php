@@ -1,0 +1,40 @@
+<?php
+
+return [
+    'roles' => [
+        'APPLICANT' => 'Applicant',
+        'UNIT_CLERK' => 'UnitSubjectClerk',
+        'UNIT_ADJUTANT' => 'UnitAdjutant',
+        'UNIT_CO' => 'UnitCO',
+        'RHQ_CLERK' => 'RHQSubjectClerk',
+        'RHQ_GSO' => 'RHQGSO',
+        'CENTRE_COMMANDANT' => 'CentreCommandant',
+        'GSO1' => 'GSO1',
+        'DTE_WELFARE' => 'DteWelfareClerk',
+        'DTE_GSO2' => 'DteWelfareGSO2',
+        'RHQ_ADMIN' => 'RHQAdmin',
+        'ADMIN' => 'Admin',
+    ],
+    'stages' => [
+        'APPLICANT' => 'Applicant',
+        'UNIT_CLERK' => 'UnitSubjectClerk',
+        'UNIT_ADJUTANT' => 'UnitAdjutant',
+        'UNIT_CO' => 'UnitCO',
+        'RHQ_CLERK' => 'RHQSubjectClerk',
+        'COMMAND_APPROVALS' => 'CommandApprovals',
+        'GSO1' => 'GSO1',
+        'CENTRE_COMMANDANT' => 'CentreCommandant',
+        'DTE' => 'DteWelfareClerk',
+        'DTE_GSO2' => 'DteWelfareGSO2',
+        'CLOSED' => 'Closed',
+    ],
+    'statuses' => [
+        'DRAFT' => 'draft',
+        'SUBMITTED' => 'submitted_to_unit',
+        'UNIT_ENDORSED' => 'unit_endorsed',
+        'RHQ_APPROVED' => 'rhq_approved',
+        'DTE_APPROVED' => 'dte_approved',
+        'RETURNED' => 'returned',
+        'REJECTED' => 'rejected',
+    ],
+];
