@@ -10,6 +10,14 @@ import multer from "multer";
 
 dotenv.config();
 
+process.on("unhandledRejection", (err) => {
+  console.error("Unhandled rejection:", err);
+});
+
+process.on("uncaughtException", (err) => {
+  console.error("Uncaught exception:", err);
+});
+
 const app = express();
 app.use(cors());
 app.use(express.json());
