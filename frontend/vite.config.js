@@ -5,5 +5,10 @@ export default defineConfig({
   plugins: [react()],
   server: {
     port: 5173
+  },
+  preview: {
+    host: true,
+    port: 8080,
+    allowedHosts: [".up.railway.app"]
   }
 });
