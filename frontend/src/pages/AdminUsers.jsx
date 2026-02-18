@@ -16,6 +16,7 @@ const ROLE_OPTIONS = [
   "RHQGSO",
   "CentreCommandant",
   "DteWelfareClerk",
+  "DteWelfareDirector",
   "DteWelfareGSO2",
   "RHQAdmin",
   "Admin"
@@ -61,7 +62,12 @@ export default function AdminUsers() {
     ? ROLE_OPTIONS
     : ROLE_OPTIONS.filter((role) => {
         if (role === "Admin" || role === "RHQAdmin") return false;
-        if (role === "DteWelfareClerk" || role === "DteWelfareGSO2") return false;
+        if (
+          role === "DteWelfareClerk" ||
+          role === "DteWelfareDirector" ||
+          role === "DteWelfareGSO2"
+        )
+          return false;
         if (isRhqAdmin) return rhqRoles.has(role);
         return unitRoles.has(role);
       });

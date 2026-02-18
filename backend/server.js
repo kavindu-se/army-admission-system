@@ -66,6 +66,7 @@ const ROLE = {
   CENTRE_COMMANDANT: "CentreCommandant",
   GSO1: "GSO1",
   DTE_WELFARE: "DteWelfareClerk",
+  DTE_DIRECTOR: "DteWelfareDirector",
   DTE_GSO2: "DteWelfareGSO2",
   RHQ_ADMIN: "RHQAdmin",
   ADMIN: "Admin"
@@ -401,7 +402,7 @@ app.post("/auth/login", async (req, res) => {
       const response = await fetch(EXTERNAL_AUTH_URL, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ e_no: service_no, password })
+        body: JSON.stringify({ e_no: providedId, password })
       });
       const data = await response.json();
       if (!response.ok || data?.status !== "success") {
@@ -755,7 +756,7 @@ app.post("/admin/users", authRequired, requireAdmin, async (req, res) => {
       }
     }
     if (
-      includesAnyRole(roleList, [ROLE.DTE_WELFARE, ROLE.DTE_GSO2]) &&
+      includesAnyRole(roleList, [ROLE.DTE_WELFARE, ROLE.DTE_DIRECTOR, ROLE.DTE_GSO2]) &&
       !isMasterAdmin(req.user)
     ) {
       return res.status(403).json({ error: "Master admin access required" });
@@ -870,7 +871,7 @@ app.put("/admin/users/:id", authRequired, requireAdmin, async (req, res) => {
       }
     }
     if (
-      includesAnyRole(roleList, [ROLE.DTE_WELFARE, ROLE.DTE_GSO2]) &&
+      includesAnyRole(roleList, [ROLE.DTE_WELFARE, ROLE.DTE_DIRECTOR, ROLE.DTE_GSO2]) &&
       !isMasterAdmin(req.user)
     ) {
       return res.status(403).json({ error: "Master admin access required" });
@@ -1164,7 +1165,7 @@ app.get("/applications", authRequired, async (req, res) => {
     } else {
       where.push("1 = 0");
     }
-  } else if (hasRole(user, ROLE.DTE_WELFARE)) {
+  } else if (hasRole(user, ROLE.DTE_WELFARE) || hasRole(user, ROLE.DTE_DIRECTOR)) {
     where.push("applications.current_stage = ?");
     params.push(STAGE.DTE);
   } else if (hasRole(user, ROLE.DTE_GSO2)) {
@@ -1915,7 +1916,7 @@ app.post("/applications/:id/action", authRequired, async (req, res) => {
     }
     handled = true;
   } else if (
-    hasRole(user, ROLE.DTE_WELFARE) &&
+    (hasRole(user, ROLE.DTE_WELFARE) || hasRole(user, ROLE.DTE_DIRECTOR)) &&
     appRow.current_stage === STAGE.DTE
   ) {
     if (action === "return") returnToApplicant();

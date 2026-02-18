@@ -23,6 +23,7 @@ const ROLE_ACTIONS = {
   CentreCommandant: ["return", "recommend"],
   GSO1: ["return", "forward"],
   DteWelfareClerk: ["return", "forward"],
+  DteWelfareDirector: ["return", "forward"],
   DteWelfareGSO2: ["approve", "reject"]
 };
 
@@ -35,6 +36,7 @@ const LEVEL_LABELS = {
   CentreCommandant: "Center Commandant",
   GSO1: "GSO1",
   DteWelfareClerk: "Dte Welfare Clerk",
+  DteWelfareDirector: "Dte Welfare Director",
   DteWelfareGSO2: "Dte Welfare GSO II"
 };
 
@@ -44,6 +46,10 @@ function displayLevel(step) {
     if (roles.includes("CentreCommandant")) return "Center Commandant";
     if (roles.includes("GSO1")) return "GSO1";
     return "Command Approval";
+  }
+  if (step.level === "DteWelfareClerk") {
+    const roles = step.actor_roles || "";
+    if (roles.includes("DteWelfareDirector")) return "Dte Welfare Director";
   }
   return LEVEL_LABELS[step.level] || step.level;
 }

@@ -15,25 +15,7 @@ api.interceptors.request.use((config) => {
 });
 
 export function login(username, password) {
-  return axios
-    .post("https://auth.army.lk/eportal/api/dailymail_login?", {
-      username,
-      password,
-      api_key: "4461696c796d61696c4032303233"
-    })
-    .then((res) => {
-      const person = res.data?.person?.[0] || {};
-      if (person && Object.keys(person).length > 0) {
-        localStorage.setItem("eportalProfile", JSON.stringify(person));
-      }
-      const eNo = person.eno || username;
-      const name =
-        person.full_name ||
-        person.name_with_initial ||
-        person.first_name ||
-        username;
-      return api.post("/auth/external", { e_no: eNo, name });
-    });
+  return api.post("/auth/login", { e_no: username, password });
 }
 
 export function loginAdmin(email, password) {
