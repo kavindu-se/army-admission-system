@@ -40,10 +40,19 @@ const establishmentsCache = {
 };
 
 const uploadDir = path.join(process.cwd(), "uploads");
-const NOTICE_PDF_PATH = path.join(process.cwd(), "..", "notice_2026.pdf");
 if (!fs.existsSync(uploadDir)) {
   fs.mkdirSync(uploadDir, { recursive: true });
 }
+
+const noticeCandidates = [
+  path.join(process.cwd(), "notice_2026.pdf"),
+  path.join(process.cwd(), "data", "notice_2026.pdf"),
+  path.join(process.cwd(), "..", "notice_2026.pdf"),
+  path.join(uploadDir, "notice_2026.pdf")
+];
+const NOTICE_PDF_PATH =
+  noticeCandidates.find((candidate) => fs.existsSync(candidate)) ||
+  path.join(uploadDir, "notice_2026.pdf");
 
 app.use("/uploads", express.static(uploadDir));
 
@@ -1025,8 +1034,7 @@ app.post(
     }
     if (fs.existsSync(NOTICE_PDF_PATH)) {
       const backupPath = path.join(
-        process.cwd(),
-        "..",
+        uploadDir,
         `notice_backup_${Date.now()}.pdf`
       );
       fs.copyFileSync(NOTICE_PDF_PATH, backupPath);
